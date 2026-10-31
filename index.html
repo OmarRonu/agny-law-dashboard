@@ -259,11 +259,11 @@ footer { border-top:1px solid var(--line); color:var(--muted); font-size:13px; m
     <div class="rule"></div>
     <h1 id="firm">A. Gutierrez Law Firm, P.C.</h1>
     <p class="lede" id="program">The Digital Authority Engine</p>
-    <p class="intro">A clear view of the program: what is complete, what is in progress, what Alex needs to do next, and when the first shoot day takes place. This page is updated as the work moves.</p>
+    <p class="intro">Your clear view of the program: what is complete, what is in progress, what you need to do next, and when the first shoot day takes place. This page is updated as the work moves.</p>
     <div class="hero-grid">
       <div class="card">
-        <p class="label">About this page</p>
-        <p>The dashboard follows the same structure as the research and competitor work prepared for AGNY Law: the bottom line first, then the details underneath. Nothing here requires a password, and Alex remains the owner of every account.</p>
+        <p class="label">For Alex</p>
+        <p>Alex, this page is yours. It shows where your program stands at any moment: what is done, what is moving, what we need from you, and what happens next. Check it any time. We will keep it current as the work moves.</p>
       </div>
       <div class="card dark">
         <p class="label">Current phase</p>
@@ -298,12 +298,12 @@ footer { border-top:1px solid var(--line); color:var(--muted); font-size:13px; m
   </section>
 
   <section id="steps">
-    <div class="sec-head"><span class="sec-num">03</span><h2>Your three action steps</h2></div>
-    <p class="sec-intro">These are the only steps Alex needs to complete for account access. Full instructions are in the onboarding email thread.</p>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Your action steps</h2></div>
+    <p class="sec-intro">These are the only steps you need to complete for account access. Full instructions are in the onboarding email thread.</p>
     <div class="steps" id="steps"></div>
     <div class="callout" style="margin-top:14px;">
       <p class="label">No password sharing</p>
-      <p style="margin:0;">Access is handled through admin grants and approvals only. Alex stays the owner of every account, and RONU cannot change account passwords or remove his access.</p>
+      <p style="margin:0;">Access is handled through admin grants and approvals only. You stay the owner of every account, and RONU cannot change account passwords or remove your access.</p>
     </div>
   </section>
 
@@ -327,6 +327,10 @@ footer { border-top:1px solid var(--line); color:var(--muted); font-size:13px; m
   <section id="schedule">
     <div class="sec-head"><span class="sec-num">05</span><h2>The weekly rhythm</h2></div>
     <p class="sec-intro">A fixed weekly pattern, so the audience learns when to expect each kind of post.</p>
+    <div class="callout" style="margin-bottom:14px;">
+      <p class="label">Posting status</p>
+      <p style="margin:0;" id="postingNote"></p>
+    </div>
     <table class="sched">
       <thead><tr><th>Day</th><th>What goes out</th></tr></thead>
       <tbody id="sched"></tbody>
@@ -405,6 +409,8 @@ fetch("data.json", { cache: "no-store" })
     document.getElementById("phases").innerHTML = d.phases.map(function(p) {
       return '<article class="phase-card"><h3>' + p.name + '</h3><p>' + p.detail + '</p></article>';
     }).join("");
+
+    document.getElementById("postingNote").textContent = d.postingNote;
 
     document.getElementById("feeLine").textContent = d.fee.line;
     document.getElementById("feeStatus").textContent = d.fee.received + ". " + d.fee.balance + ".";
