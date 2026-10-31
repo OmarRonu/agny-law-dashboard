@@ -5,110 +5,357 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AGNY Law Client Dashboard, RONU.media</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root { --navy:#0A2540; --navy2:#061B30; --gold:#C9A961; --goldl:#D9BD7A; --cream:#F7F4ED; --ink:#1f2937; --mut:#4b5563; --line:#e5e7eb; }
-* { box-sizing: border-box; }
-body { margin:0; font-family: Inter, Helvetica, sans-serif; color: var(--ink); background:#f3f1ec; line-height:1.45; }
-.wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 40px; }
-header.top { background: var(--navy); color: var(--cream); padding: 26px 24px; border-top: 4px solid var(--gold); }
-.kicker { letter-spacing: 2px; font-size: 11px; color: var(--goldl); margin: 0 0 6px 0; }
-h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 34px; margin: 0 0 4px 0; font-weight: 600; }
-.sub { font-family: "Cormorant Garamond", Georgia, serif; font-size: 19px; color: var(--goldl); margin: 0; }
-.phase { margin-top: 10px; font-size: 14px; }
-.updated { font-size: 12px; color: #9fb3c8; margin-top: 4px; }
-section { background: #fff; padding: 18px 20px; margin-top: 14px; border: 1px solid var(--line); }
-h2 { font-family: "Cormorant Garamond", Georgia, serif; color: var(--navy); font-size: 22px; margin: 0 0 10px 0; padding: 4px 8px; border-bottom: 3px solid var(--gold); border-left: 8px solid var(--gold); background: #FBF6E9; }
-.stats { display: flex; flex-wrap: wrap; gap: 8px; }
-.stat { flex: 1 1 120px; background: var(--cream); border-top: 3px solid var(--gold); text-align: center; padding: 10px 4px; }
-.stat b { font-family: "Cormorant Garamond", Georgia, serif; font-size: 26px; color: var(--navy); display: block; line-height: 1.1; }
-.stat span { font-size: 10px; letter-spacing: 1px; color: var(--mut); }
-.row { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); }
-.row:last-child { border-bottom: none; }
-.chip { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; height: fit-content; }
-.done { background: #e6f4ea; color: #1e7d32; }
-.prog { background: #fdf6ec; color: #9a6a14; }
-.todo { background: #eef1f5; color: #4A5A74; }
-.wait { background: #fdeeee; color: #a63a3a; }
-.step { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
-.step:last-child { border-bottom: none; }
-.snum { font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; color: var(--gold); line-height: 1; }
-.shoot { background: var(--navy); color: var(--cream); padding: 18px 20px; margin-top: 14px; }
-.shoot h2 { background: transparent; border: none; color: var(--cream); padding: 0; font-size: 24px; margin-bottom: 4px; }
-.count { font-family: "Cormorant Garamond", Georgia, serif; font-size: 30px; color: var(--goldl); }
-table.sched { width: 100%; border-collapse: collapse; }
-table.sched td { padding: 6px 4px; border-bottom: 1px solid var(--line); }
-table.sched td:first-child { font-weight: 700; color: var(--navy); width: 110px; }
-.brow { margin-bottom: 10px; }
-.bname { font-size: 12px; color: var(--mut); }
-.btrack { background: #EEF1F5; height: 16px; margin: 2px 0; }
-.bfill { height: 16px; }
-.fee { background: var(--cream); border-left: 8px solid var(--gold); padding: 10px 12px; }
-.small { font-size: 12px; color: var(--mut); }
-footer { text-align: center; font-size: 12px; color: var(--mut); margin-top: 18px; }
-.err { background:#fdeeee; color:#a63a3a; padding: 12px; margin-top: 14px; display:none; }
+:root {
+  --navy:#0A2540;
+  --navy-2:#061B30;
+  --navy-soft:#1A3A5C;
+  --gold:#C9A961;
+  --gold-light:#D9BD7A;
+  --gold-dark:#9A7B2D;
+  --cream:#F7F4ED;
+  --paper:#FFFDF8;
+  --page:#F6F1E7;
+  --ink:#26364A;
+  --muted:#687386;
+  --line:#E3DCCB;
+  --line-soft:#ECE5D3;
+  --pale-gold:#FBF3D9;
+  --green-bg:#EAF6EE;
+  --green:#24713A;
+  --amber-bg:#FFF4D6;
+  --amber:#8A5A12;
+  --blue-bg:#EEF3F8;
+  --blue:#405A76;
+  --red-bg:#FDECEC;
+  --red:#9C3D3D;
+  --shadow:0 10px 30px rgba(10,37,64,.07);
+  --shadow-soft:0 4px 16px rgba(10,37,64,.05);
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:var(--page);
+  color:var(--ink);
+  font-family:Inter, Helvetica, Arial, sans-serif;
+  line-height:1.55;
+}
+.wrap { max-width:1060px; margin:0 auto; padding:38px 28px 54px; }
+.eyebrow {
+  color:var(--gold-dark);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  margin:0 0 8px;
+}
+.dateline { color:var(--muted); font-size:13px; margin:0 0 18px; }
+.rule { height:1px; background:linear-gradient(90deg, var(--gold), rgba(201,169,97,.15)); margin:0 0 30px; }
+h1 {
+  color:var(--navy);
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-size:clamp(44px, 7vw, 76px);
+  font-weight:600;
+  line-height:.98;
+  letter-spacing:-.02em;
+  margin:0 0 14px;
+}
+.lede {
+  color:var(--navy-soft);
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-size:clamp(24px, 3.4vw, 34px);
+  line-height:1.18;
+  margin:0;
+  max-width:850px;
+}
+.intro { color:var(--ink); font-size:16px; max-width:820px; margin:18px 0 0; }
+.hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px; }
+.card {
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow-soft);
+  padding:24px;
+}
+.card.dark { background:var(--navy); border-color:var(--navy); color:#F7F4ED; box-shadow:var(--shadow); }
+.label {
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold-dark);
+  margin:0 0 10px;
+}
+.dark .label { color:var(--gold-light); }
+.card p { margin:0; }
+.dark .phase-text { font-family:"Cormorant Garamond", Georgia, serif; font-size:25px; line-height:1.2; color:#fff; }
+.dark .small { color:#C9D3DF; }
+.small { color:var(--muted); font-size:13px; }
+.nav {
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:rgba(246,241,231,.96);
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 26px;
+  padding:16px 0 14px;
+  margin-top:26px;
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav a { color:var(--navy); font-weight:700; font-size:14px; text-decoration:none; }
+.nav a:hover { text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:4px; }
+section { margin-top:38px; }
+.sec-head { display:flex; align-items:baseline; gap:14px; margin-bottom:8px; }
+.sec-num { color:var(--gold-dark); font-family:"Cormorant Garamond", Georgia, serif; font-size:27px; font-weight:700; line-height:1; }
+h2 {
+  color:var(--navy);
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-size:clamp(30px, 4vw, 42px);
+  font-weight:600;
+  line-height:1.05;
+  margin:0;
+}
+.sec-intro { color:var(--ink); margin:0 0 16px; max-width:780px; }
+.panel {
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow-soft);
+  padding:24px;
+}
+.panel.strong { border-top:4px solid var(--gold); box-shadow:var(--shadow); }
+.stats { display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
+.stat {
+  background:var(--cream);
+  border:1px solid var(--line-soft);
+  border-radius:14px;
+  padding:18px 16px;
+  min-height:118px;
+}
+.stat b {
+  display:block;
+  color:var(--gold-dark);
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-size:44px;
+  font-weight:700;
+  line-height:.95;
+  margin-bottom:10px;
+}
+.stat span { color:var(--navy); font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:13px 0;
+  border-bottom:1px solid var(--line-soft);
+}
+.row:first-child { padding-top:0; }
+.row:last-child { border-bottom:none; padding-bottom:0; }
+.row-title { color:var(--navy); font-weight:600; }
+.chip {
+  border:1px solid currentColor;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.06em;
+  line-height:1;
+  padding:7px 10px;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.done { background:var(--green-bg); color:var(--green); }
+.prog { background:var(--amber-bg); color:var(--amber); }
+.todo { background:var(--blue-bg); color:var(--blue); }
+.wait { background:var(--red-bg); color:var(--red); }
+.steps { display:grid; gap:14px; }
+.step {
+  display:grid;
+  grid-template-columns:52px 1fr auto;
+  gap:16px;
+  align-items:start;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow-soft);
+  padding:20px;
+}
+.snum { color:var(--gold-dark); font-family:"Cormorant Garamond", Georgia, serif; font-size:42px; font-weight:700; line-height:.9; }
+.step h3 { color:var(--navy); font-size:16px; margin:0 0 4px; }
+.step p { margin:0; }
+.callout {
+  background:var(--pale-gold);
+  border:1px solid #EBD9A0;
+  border-radius:16px;
+  padding:22px;
+}
+.shoot-panel {
+  background:var(--navy);
+  border-radius:16px;
+  color:var(--cream);
+  box-shadow:var(--shadow);
+  padding:28px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:24px;
+  align-items:center;
+}
+.shoot-panel .label { color:var(--gold-light); }
+.shoot-title { color:#fff; font-family:"Cormorant Garamond", Georgia, serif; font-size:38px; font-weight:600; line-height:1.05; margin:0 0 8px; }
+.count { color:var(--gold-light); font-family:"Cormorant Garamond", Georgia, serif; font-size:clamp(38px, 6vw, 58px); font-weight:700; line-height:1; text-align:right; }
+.shoot-meta { color:#DCE4EE; text-align:right; margin-top:8px; }
+table.sched { width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:14px; }
+table.sched th {
+  background:var(--navy);
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.1em;
+  padding:13px 16px;
+  text-align:left;
+  text-transform:uppercase;
+}
+table.sched td { background:var(--paper); border-bottom:1px solid var(--line-soft); padding:13px 16px; vertical-align:top; }
+table.sched tr:last-child td { border-bottom:none; }
+table.sched td:first-child { color:var(--navy); font-weight:800; width:150px; }
+.phases { display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; }
+.phase-card { background:var(--paper); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-soft); padding:20px; }
+.phase-card h3 { color:var(--navy); font-family:"Cormorant Garamond", Georgia, serif; font-size:25px; line-height:1.1; margin:0 0 8px; }
+.phase-card p { margin:0; }
+.fee-line { color:var(--navy); font-family:"Cormorant Garamond", Georgia, serif; font-size:28px; font-weight:600; line-height:1.2; }
+.brow { display:grid; grid-template-columns:1fr auto; gap:6px 16px; margin-bottom:18px; }
+.brow:last-child { margin-bottom:0; }
+.bname { color:var(--navy); font-weight:700; }
+.bvalue { color:var(--navy); font-weight:800; white-space:nowrap; }
+.btrack { grid-column:1 / -1; background:#EFE7D3; border-radius:999px; height:16px; overflow:hidden; }
+.bfill { height:100%; border-radius:999px; }
+.bnote { grid-column:1 / -1; color:var(--muted); font-size:13px; margin-top:-2px; }
+.err { background:var(--red-bg); border:1px solid #F0B9B9; border-radius:14px; color:var(--red); display:none; margin-top:18px; padding:14px 16px; }
+footer { border-top:1px solid var(--line); color:var(--muted); font-size:13px; margin-top:44px; padding-top:18px; }
+@media (max-width:760px) {
+  .wrap { padding:28px 18px 42px; }
+  .hero-grid, .shoot-panel, .phases { grid-template-columns:1fr; }
+  .stats { grid-template-columns:repeat(2, 1fr); }
+  .count, .shoot-meta { text-align:left; }
+  .step { grid-template-columns:40px 1fr; }
+  .step .chip { grid-column:2; justify-self:start; }
+  .row { align-items:flex-start; }
+  table.sched td:first-child { width:105px; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <p class="kicker">RONU.MEDIA</p>
+  <header>
+    <p class="eyebrow">RONU.media client dashboard</p>
+    <p class="dateline">Dashboard updated: <span id="updated"></span></p>
+    <div class="rule"></div>
     <h1 id="firm">A. Gutierrez Law Firm, P.C.</h1>
-    <p class="sub" id="program">The Digital Authority Engine</p>
-    <p class="phase" id="phaseLine"></p>
-    <p class="updated">Dashboard updated: <span id="updated"></span></p>
+    <p class="lede" id="program">The Digital Authority Engine</p>
+    <p class="intro">A clear view of the program: what is complete, what is in progress, what Alex needs to do next, and when the first shoot day takes place. This page is updated as the work moves.</p>
+    <div class="hero-grid">
+      <div class="card">
+        <p class="label">About this page</p>
+        <p>The dashboard follows the same structure as the research and competitor work prepared for AGNY Law: the bottom line first, then the details underneath. Nothing here requires a password, and Alex remains the owner of every account.</p>
+      </div>
+      <div class="card dark">
+        <p class="label">Current phase</p>
+        <p class="phase-text" id="phaseLine"></p>
+        <p class="small" style="margin-top:10px;">Questions: reply in the onboarding email thread.</p>
+      </div>
+    </div>
   </header>
+
+  <nav class="nav" aria-label="Dashboard sections">
+    <a href="#progress">Progress</a>
+    <a href="#steps">Action steps</a>
+    <a href="#shoot">Shoot day</a>
+    <a href="#schedule">Weekly rhythm</a>
+    <a href="#plan">90 day plan</a>
+    <a href="#fee">Program fee</a>
+    <a href="#why">Why this works</a>
+  </nav>
 
   <div class="err" id="err">This dashboard could not load its latest data. Please refresh the page.</div>
 
-  <section>
-    <h2>The program at a glance</h2>
-    <div class="stats" id="stats"></div>
+  <section id="glance">
+    <div class="sec-head"><span class="sec-num">01</span><h2>The program at a glance</h2></div>
+    <p class="sec-intro">The monthly shape of the work, in plain numbers.</p>
+    <div class="panel strong"><div class="stats" id="stats"></div></div>
   </section>
 
-  <section>
-    <h2>Week 0 progress</h2>
-    <div id="week0"></div>
+  <section id="progress">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Week 0 progress</h2></div>
+    <p class="sec-intro">Where onboarding stands right now.</p>
+    <div class="panel"><div id="week0"></div></div>
   </section>
 
-  <section>
-    <h2>Your three action steps</h2>
-    <div id="steps"></div>
-    <p class="small">Full instructions are in the onboarding email thread. No passwords are ever shared: access is by admin grants and approvals only, and you stay the owner of every account.</p>
-  </section>
-
-  <div class="shoot">
-    <h2 id="shootTitle">First shoot day</h2>
-    <div class="count" id="countdown"></div>
-    <div id="shootWhen"></div>
-    <div id="shootWhere"></div>
-  </div>
-
-  <section>
-    <h2>The weekly rhythm</h2>
-    <table class="sched" id="sched"></table>
-  </section>
-
-  <section>
-    <h2>The 90 day plan</h2>
-    <div id="phases"></div>
-  </section>
-
-  <section>
-    <h2>Program fee</h2>
-    <div class="fee">
-      <div id="feeLine" style="font-weight:700; color:var(--navy);"></div>
-      <div class="small" id="feeStatus" style="margin-top:4px;"></div>
+  <section id="steps">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Your three action steps</h2></div>
+    <p class="sec-intro">These are the only steps Alex needs to complete for account access. Full instructions are in the onboarding email thread.</p>
+    <div class="steps" id="steps"></div>
+    <div class="callout" style="margin-top:14px;">
+      <p class="label">No password sharing</p>
+      <p style="margin:0;">Access is handled through admin grants and approvals only. Alex stays the owner of every account, and RONU cannot change account passwords or remove his access.</p>
     </div>
   </section>
 
-  <section>
-    <h2>Why this works</h2>
-    <div id="chart"></div>
-    <p class="small" id="chartNote"></p>
+  <section id="shoot">
+    <div class="sec-head"><span class="sec-num">04</span><h2>First shoot day</h2></div>
+    <p class="sec-intro">The first production day is locked in.</p>
+    <div class="shoot-panel">
+      <div>
+        <p class="label">Shoot day</p>
+        <p class="shoot-title" id="shootTitle">First shoot day</p>
+        <p style="margin:0; color:#DCE4EE;">A focused four hour session to build the first content bank.</p>
+      </div>
+      <div>
+        <div class="count" id="countdown"></div>
+        <div class="shoot-meta" id="shootWhen"></div>
+        <div class="shoot-meta" id="shootWhere"></div>
+      </div>
+    </div>
   </section>
 
-  <footer>Prepared by RONU MEDIA LLC (RONU.media) for A. Gutierrez Law Firm, P.C. Questions: reply in the onboarding email thread.</footer>
+  <section id="schedule">
+    <div class="sec-head"><span class="sec-num">05</span><h2>The weekly rhythm</h2></div>
+    <p class="sec-intro">A fixed weekly pattern, so the audience learns when to expect each kind of post.</p>
+    <table class="sched">
+      <thead><tr><th>Day</th><th>What goes out</th></tr></thead>
+      <tbody id="sched"></tbody>
+    </table>
+  </section>
+
+  <section id="plan">
+    <div class="sec-head"><span class="sec-num">06</span><h2>The 90 day plan</h2></div>
+    <p class="sec-intro">Three months, three jobs: build the presence, add the Spanish remakes, then review the numbers and set the next cycle.</p>
+    <div class="phases" id="phases"></div>
+  </section>
+
+  <section id="fee">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Program fee</h2></div>
+    <p class="sec-intro">One package, billed as one monthly fee.</p>
+    <div class="callout">
+      <p class="label">The Digital Authority Engine</p>
+      <div class="fee-line" id="feeLine"></div>
+      <p class="small" id="feeStatus" style="margin:8px 0 0;"></p>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Why this works</h2></div>
+    <p class="sec-intro">The competitor study points to format over fame: results posted fast, a named series on a fixed day, and one easy way to reach the firm.</p>
+    <div class="panel"><div id="chart"></div><p class="small" id="chartNote" style="margin:16px 0 0;"></p></div>
+  </section>
+
+  <footer>Prepared by RONU MEDIA LLC (RONU.media) for A. Gutierrez Law Firm, P.C. This dashboard is updated as the program moves.</footer>
 </div>
 
 <script>
@@ -131,11 +378,11 @@ fetch("data.json", { cache: "no-store" })
     }).join("");
 
     document.getElementById("week0").innerHTML = d.week0.map(function(w) {
-      return '<div class="row"><div>' + w.item + '</div><span class="' + chipClass(w.status) + '">' + w.status + '</span></div>';
+      return '<div class="row"><div class="row-title">' + w.item + '</div><span class="' + chipClass(w.status) + '">' + w.status + '</span></div>';
     }).join("");
 
     document.getElementById("steps").innerHTML = d.steps.map(function(s) {
-      return '<div class="step"><div class="snum">' + s.n + '</div><div style="flex:1;"><b style="color:var(--navy);">' + s.title + '</b><br>' + s.detail + '</div><span class="' + chipClass(s.status) + '">' + s.status + '</span></div>';
+      return '<article class="step"><div class="snum">' + s.n + '</div><div><h3>' + s.title + '</h3><p>' + s.detail + '</p></div><span class="' + chipClass(s.status) + '">' + s.status + '</span></article>';
     }).join("");
 
     document.getElementById("shootTitle").textContent = d.shoot.title;
@@ -156,14 +403,14 @@ fetch("data.json", { cache: "no-store" })
     }).join("");
 
     document.getElementById("phases").innerHTML = d.phases.map(function(p) {
-      return '<div style="padding:6px 0; border-bottom:1px solid var(--line);"><b style="color:var(--navy);">' + p.name + '</b><br>' + p.detail + '</div>';
+      return '<article class="phase-card"><h3>' + p.name + '</h3><p>' + p.detail + '</p></article>';
     }).join("");
 
     document.getElementById("feeLine").textContent = d.fee.line;
     document.getElementById("feeStatus").textContent = d.fee.received + ". " + d.fee.balance + ".";
 
     document.getElementById("chart").innerHTML = d.chart.map(function(c) {
-      return '<div class="brow"><span class="bname">' + c.name + '</span><div class="btrack"><div class="bfill" style="width:' + c.pct + '%; background:' + c.color + ';"></div></div><b>about ' + c.likes.toLocaleString() + ' likes</b> <span class="small">and ' + c.comments + ' comments per typical post</span></div>';
+      return '<div class="brow"><span class="bname">' + c.name + '</span><span class="bvalue">about ' + c.likes.toLocaleString() + ' likes</span><div class="btrack"><div class="bfill" style="width:' + c.pct + '%; background:' + c.color + ';"></div></div><span class="bnote">' + c.comments + ' comments per typical post</span></div>';
     }).join("");
     document.getElementById("chartNote").textContent = d.chartNote;
   })
