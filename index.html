@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGNY Law Client Dashboard, RONU.media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root { --navy:#0A2540; --navy2:#061B30; --gold:#C9A961; --goldl:#D9BD7A; --cream:#F7F4ED; --ink:#1f2937; --mut:#4b5563; --line:#e5e7eb; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: Inter, Helvetica, sans-serif; color: var(--ink); background:#f3f1ec; line-height:1.45; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 40px; }
+header.top { background: var(--navy); color: var(--cream); padding: 26px 24px; border-top: 4px solid var(--gold); }
+.kicker { letter-spacing: 2px; font-size: 11px; color: var(--goldl); margin: 0 0 6px 0; }
+h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 34px; margin: 0 0 4px 0; font-weight: 600; }
+.sub { font-family: "Cormorant Garamond", Georgia, serif; font-size: 19px; color: var(--goldl); margin: 0; }
+.phase { margin-top: 10px; font-size: 14px; }
+.updated { font-size: 12px; color: #9fb3c8; margin-top: 4px; }
+section { background: #fff; padding: 18px 20px; margin-top: 14px; border: 1px solid var(--line); }
+h2 { font-family: "Cormorant Garamond", Georgia, serif; color: var(--navy); font-size: 22px; margin: 0 0 10px 0; padding: 4px 8px; border-bottom: 3px solid var(--gold); border-left: 8px solid var(--gold); background: #FBF6E9; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat { flex: 1 1 120px; background: var(--cream); border-top: 3px solid var(--gold); text-align: center; padding: 10px 4px; }
+.stat b { font-family: "Cormorant Garamond", Georgia, serif; font-size: 26px; color: var(--navy); display: block; line-height: 1.1; }
+.stat span { font-size: 10px; letter-spacing: 1px; color: var(--mut); }
+.row { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: none; }
+.chip { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; height: fit-content; }
+.done { background: #e6f4ea; color: #1e7d32; }
+.prog { background: #fdf6ec; color: #9a6a14; }
+.todo { background: #eef1f5; color: #4A5A74; }
+.wait { background: #fdeeee; color: #a63a3a; }
+.step { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.step:last-child { border-bottom: none; }
+.snum { font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; color: var(--gold); line-height: 1; }
+.shoot { background: var(--navy); color: var(--cream); padding: 18px 20px; margin-top: 14px; }
+.shoot h2 { background: transparent; border: none; color: var(--cream); padding: 0; font-size: 24px; margin-bottom: 4px; }
+.count { font-family: "Cormorant Garamond", Georgia, serif; font-size: 30px; color: var(--goldl); }
+table.sched { width: 100%; border-collapse: collapse; }
+table.sched td { padding: 6px 4px; border-bottom: 1px solid var(--line); }
+table.sched td:first-child { font-weight: 700; color: var(--navy); width: 110px; }
+.brow { margin-bottom: 10px; }
+.bname { font-size: 12px; color: var(--mut); }
+.btrack { background: #EEF1F5; height: 16px; margin: 2px 0; }
+.bfill { height: 16px; }
+.fee { background: var(--cream); border-left: 8px solid var(--gold); padding: 10px 12px; }
+.small { font-size: 12px; color: var(--mut); }
+footer { text-align: center; font-size: 12px; color: var(--mut); margin-top: 18px; }
+.err { background:#fdeeee; color:#a63a3a; padding: 12px; margin-top: 14px; display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">RONU.MEDIA</p>
+    <h1 id="firm">A. Gutierrez Law Firm, P.C.</h1>
+    <p class="sub" id="program">The Digital Authority Engine</p>
+    <p class="phase" id="phaseLine"></p>
+    <p class="updated">Dashboard updated: <span id="updated"></span></p>
+  </header>
+
+  <div class="err" id="err">This dashboard could not load its latest data. Please refresh the page.</div>
+
+  <section>
+    <h2>The program at a glance</h2>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section>
+    <h2>Week 0 progress</h2>
+    <div id="week0"></div>
+  </section>
+
+  <section>
+    <h2>Your three action steps</h2>
+    <div id="steps"></div>
+    <p class="small">Full instructions are in the onboarding email thread. No passwords are ever shared: access is by admin grants and approvals only, and you stay the owner of every account.</p>
+  </section>
+
+  <div class="shoot">
+    <h2 id="shootTitle">First shoot day</h2>
+    <div class="count" id="countdown"></div>
+    <div id="shootWhen"></div>
+    <div id="shootWhere"></div>
+  </div>
+
+  <section>
+    <h2>The weekly rhythm</h2>
+    <table class="sched" id="sched"></table>
+  </section>
+
+  <section>
+    <h2>The 90 day plan</h2>
+    <div id="phases"></div>
+  </section>
+
+  <section>
+    <h2>Program fee</h2>
+    <div class="fee">
+      <div id="feeLine" style="font-weight:700; color:var(--navy);"></div>
+      <div class="small" id="feeStatus" style="margin-top:4px;"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why this works</h2>
+    <div id="chart"></div>
+    <p class="small" id="chartNote"></p>
+  </section>
+
+  <footer>Prepared by RONU MEDIA LLC (RONU.media) for A. Gutierrez Law Firm, P.C. Questions: reply in the onboarding email thread.</footer>
+</div>
+
+<script>
+function chipClass(status) {
+  if (status === "Done") return "chip done";
+  if (status === "In progress") return "chip prog";
+  if (status === "Waiting on the firm") return "chip wait";
+  return "chip todo";
+}
+fetch("data.json", { cache: "no-store" })
+  .then(function(r) { if (!r.ok) throw new Error("load"); return r.json(); })
+  .then(function(d) {
+    document.getElementById("firm").textContent = d.firm;
+    document.getElementById("program").textContent = d.program;
+    document.getElementById("phaseLine").textContent = d.phaseLine;
+    document.getElementById("updated").textContent = d.updated;
+
+    document.getElementById("stats").innerHTML = d.stats.map(function(s) {
+      return '<div class="stat"><b>' + s.value + '</b><span>' + s.label + '</span></div>';
+    }).join("");
+
+    document.getElementById("week0").innerHTML = d.week0.map(function(w) {
+      return '<div class="row"><div>' + w.item + '</div><span class="' + chipClass(w.status) + '">' + w.status + '</span></div>';
+    }).join("");
+
+    document.getElementById("steps").innerHTML = d.steps.map(function(s) {
+      return '<div class="step"><div class="snum">' + s.n + '</div><div style="flex:1;"><b style="color:var(--navy);">' + s.title + '</b><br>' + s.detail + '</div><span class="' + chipClass(s.status) + '">' + s.status + '</span></div>';
+    }).join("");
+
+    document.getElementById("shootTitle").textContent = d.shoot.title;
+    document.getElementById("shootWhen").textContent = d.shoot.when;
+    document.getElementById("shootWhere").textContent = d.shoot.where;
+    function tick() {
+      var diff = new Date(d.shoot.iso) - new Date();
+      var el = document.getElementById("countdown");
+      if (diff <= 0) { el.textContent = "Shoot day is here"; return; }
+      var days = Math.floor(diff / 86400000);
+      var hrs = Math.floor(diff % 86400000 / 3600000);
+      el.textContent = days + (days === 1 ? " day" : " days") + ", " + hrs + (hrs === 1 ? " hour" : " hours") + " to go";
+    }
+    tick(); setInterval(tick, 60000);
+
+    document.getElementById("sched").innerHTML = d.schedule.map(function(s) {
+      return '<tr><td>' + s.day + '</td><td>' + s.what + '</td></tr>';
+    }).join("");
+
+    document.getElementById("phases").innerHTML = d.phases.map(function(p) {
+      return '<div style="padding:6px 0; border-bottom:1px solid var(--line);"><b style="color:var(--navy);">' + p.name + '</b><br>' + p.detail + '</div>';
+    }).join("");
+
+    document.getElementById("feeLine").textContent = d.fee.line;
+    document.getElementById("feeStatus").textContent = d.fee.received + ". " + d.fee.balance + ".";
+
+    document.getElementById("chart").innerHTML = d.chart.map(function(c) {
+      return '<div class="brow"><span class="bname">' + c.name + '</span><div class="btrack"><div class="bfill" style="width:' + c.pct + '%; background:' + c.color + ';"></div></div><b>about ' + c.likes.toLocaleString() + ' likes</b> <span class="small">and ' + c.comments + ' comments per typical post</span></div>';
+    }).join("");
+    document.getElementById("chartNote").textContent = d.chartNote;
+  })
+  .catch(function() { document.getElementById("err").style.display = "block"; });
+</script>
+</body>
+</html>
